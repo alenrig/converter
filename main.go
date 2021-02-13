@@ -1,8 +1,24 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"io/ioutil"
+	"strings"
+)
+
+const fileType string = ".go"
 
 func main() {
+	srcFiles, err := GetSrcInDir()
+	if err != nil {
+		fmt.Println(err)
+	} else {
+		for _, srcFile := range srcFiles {
+			fmt.Println(srcFile)
+		}
+	}
+}
+
 // GetSrcInDir - Get all files with needed file type in current dir
 func GetSrcInDir() ([]string, error) {
 	srcFiles := []string{}
