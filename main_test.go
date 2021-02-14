@@ -13,3 +13,12 @@ func TestGetSrcInDir(t *testing.T) {
 		}
 	}
 }
+
+func TestOpenSrcFile(t *testing.T) {
+	expected := []string{"test"}
+	result, _ := OpenSrcFile("./test/openfile.asc")
+
+	if result != expected {
+		t.Error("Fuck!")
+	}
+}
