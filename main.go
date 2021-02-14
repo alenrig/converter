@@ -62,3 +62,26 @@ func deleteEmpty(s []string) []string {
 	}
 	return r
 }
+
+// CutDatapoints cuts datapoints from src file.
+// Strings ***<SOMETHING>*** are benchmarks - there are always a datapoints inside this range.
+func CutDatapoints(slicedContent []string) (string, []string) {
+	startLine := findIndexByContent(slicedContent, "*** DATA START ***") + 3
+	endLine := findIndexByContent(slicedContent, "*** DATA END ***") - 1
+
+	header := slicedContent[startLine]
+	datapoints := slicedContent[startLine+2 : endLine]
+
+	return header, datapoints
+}
+
+func findIndexByContent(slicedContent []string, contentToFind string) int {
+	var result int
+	for i, v := range slicedContent {
+		if v == contentToFind {
+			result = i
+		}
+	}
+
+	return result
+}
