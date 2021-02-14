@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"io/ioutil"
 	"log"
 	"strings"
@@ -20,7 +19,8 @@ func main() {
 		if err != nil {
 			log.Fatal(err)
 		}
-		fmt.Println(slicedContent)
+		header, datapoints := CutDatapoints(slicedContent)
+		ions := parseHeader(header)
 	}
 }
 
@@ -84,4 +84,11 @@ func findIndexByContent(slicedContent []string, contentToFind string) int {
 	}
 
 	return result
+}
+
+func parseHeader(rawString string) []string {
+	slicedHeader := strings.Split(rawString, "\t")
+	ions := deleteEmpty(slicedHeader)
+
+	return ions
 }
