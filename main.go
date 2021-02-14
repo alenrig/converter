@@ -12,8 +12,8 @@ const fileType string = ".go"
 
 func main() {
 	pathFlag := flag.String("p", ".", "working directory")
-
 	flag.Parse()
+
 	srcFiles, err := GetSrcInDir(pathFlag)
 	if err != nil {
 		log.Fatal(err)
