@@ -1,6 +1,8 @@
 package main
 
 import (
+	"flag"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"strings"
@@ -9,7 +11,10 @@ import (
 const fileType string = ".go"
 
 func main() {
-	srcFiles, err := GetSrcInDir()
+	pathFlag := flag.String("p", ".", "working directory")
+
+	flag.Parse()
+	srcFiles, err := GetSrcInDir(pathFlag)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -23,13 +28,14 @@ func main() {
 		name := GetName(slicedContent)
 		header, datapoints := CutDatapoints(slicedContent)
 		ions := parseHeader(header)
+		fmt.Println(name, datapoints, ions)
 	}
 }
 
 // GetSrcInDir - Get all files with needed file type in current dir
-func GetSrcInDir() ([]string, error) {
+func GetSrcInDir(path *string) ([]string, error) {
 	srcFiles := []string{}
-	filesInDir, err := ioutil.ReadDir(".")
+	filesInDir, err := ioutil.ReadDir(*path)
 	if err != nil {
 		return nil, err
 	}
@@ -104,13 +110,3 @@ func parseHeader(rawString string) []string {
 
 	return ions
 }
-
-func CleanDatapoints(datapoints []string) []float32 {
-	grid, data = []float32{}, []float32{}
-	for _, line := range datapoints {
-		points := strings.Split(line, "\t")
-		x, y := float32(line[0]), line[1:]
-		y := CleanYAxis(line)
-	}
-}
-
