@@ -19,7 +19,8 @@ func TestGetSrcInDir(t *testing.T) {
 
 func TestOpenSrcFile(t *testing.T) {
 	expected := []string{"test", "test"}
-	result, _ := OpenSrcFile("./test/openfile.asc")
+	path := "test"
+	result, _ := OpenSrcFile(&path, "openfile.asc")
 
 	for i, v := range result {
 		if v != expected[i] {

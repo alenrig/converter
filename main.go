@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-const fileType string = ".go"
+const fileType string = ".dp_rpc_asc"
 
 func main() {
 	pathFlag := flag.String("p", ".", "working directory")
@@ -20,7 +20,7 @@ func main() {
 	}
 
 	for _, srcFile := range srcFiles {
-		slicedContent, err := OpenSrcFile(srcFile)
+		slicedContent, err := OpenSrcFile(pathFlag, srcFile)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -49,8 +49,8 @@ func GetSrcInDir(path *string) ([]string, error) {
 }
 
 // OpenSrcFile opens given filepath as slice of strings.
-func OpenSrcFile(srcFile string) ([]string, error) {
-	bytesContent, err := ioutil.ReadFile(srcFile)
+func OpenSrcFile(path *string, srcFile string) ([]string, error) {
+	bytesContent, err := ioutil.ReadFile(*path + "/" + srcFile)
 	if err != nil {
 		return nil, err
 	}
