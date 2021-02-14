@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
+	"log"
 	"strings"
 )
 
@@ -11,9 +12,8 @@ const fileType string = ".go"
 func main() {
 	srcFiles, err := GetSrcInDir()
 	if err != nil {
-		fmt.Println(err)
-	} else {
-		for _, srcFile := range srcFiles {
+		log.Fatal(err)
+	}
 			fmt.Println(srcFile)
 		}
 	}
