@@ -100,6 +100,7 @@ func findIndexByContent(slicedContent []string, contentToFind string) int {
 func parseHeader(rawString string) []string {
 	slicedHeader := strings.Split(rawString, "\t")
 	ions := deleteEmpty(slicedHeader)
+	ions = append([]string{"time"}, ions...)
 
 	return ions
 }
