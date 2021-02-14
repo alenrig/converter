@@ -6,8 +6,9 @@ import (
 
 func TestGetSrcInDir(t *testing.T) {
 	expected := []string{"main.go", "main_test.go"}
+	var path = "."
 
-	result, _ := GetSrcInDir()
+	result, _ := GetSrcInDir(&path)
 
 	for i, v := range result {
 		if v != expected[i] {
