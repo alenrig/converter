@@ -19,6 +19,7 @@ func main() {
 		if err != nil {
 			log.Fatal(err)
 		}
+		name := GetHeader(slicedContent)
 		header, datapoints := CutDatapoints(slicedContent)
 		ions := parseHeader(header)
 	}
@@ -51,6 +52,14 @@ func OpenSrcFile(srcFile string) ([]string, error) {
 	slicedContent = deleteEmpty(slicedContent)
 
 	return slicedContent, nil
+}
+
+func GetHeader(slicedContent []string) string {
+	slicedNameString := strings.Split(slicedContent[2], "\t")
+	fullName := slicedContent[len(slicedNameString)-1]
+	name := strings.Split(fullName, ".")[0]
+
+	return name
 }
 
 func deleteEmpty(s []string) []string {
