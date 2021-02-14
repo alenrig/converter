@@ -104,3 +104,13 @@ func parseHeader(rawString string) []string {
 
 	return ions
 }
+
+func CleanDatapoints(datapoints []string) []float32 {
+	grid, data = []float32{}, []float32{}
+	for _, line := range datapoints {
+		points := strings.Split(line, "\t")
+		x, y := float32(line[0]), line[1:]
+		y := CleanYAxis(line)
+	}
+}
+
