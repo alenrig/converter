@@ -34,3 +34,6 @@ compile:
   artifacts:
     paths:
       - converter
+  only:
+    branch:
+      - master
