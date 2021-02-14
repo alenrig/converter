@@ -14,8 +14,13 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-			fmt.Println(srcFile)
+
+	for _, srcFile := range srcFiles {
+		slicedContent, err := OpenSrcFile(srcFile)
+		if err != nil {
+			log.Fatal(err)
 		}
+		fmt.Println(slicedContent)
 	}
 }
 
