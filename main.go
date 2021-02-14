@@ -34,3 +34,26 @@ func GetSrcInDir() ([]string, error) {
 
 	return srcFiles, nil
 }
+
+// OpenSrcFile opens given filepath as slice of strings.
+func OpenSrcFile(srcFile string) ([]string, error) {
+	bytesContent, err := ioutil.ReadFile(srcFile)
+	if err != nil {
+		return nil, err
+	}
+	oneStringContent := string(bytesContent)
+	slicedContent := strings.Split(oneStringContent, "\n")
+	slicedContent = deleteEmpty(slicedContent)
+
+	return slicedContent, nil
+}
+
+func deleteEmpty(s []string) []string {
+	var r []string
+	for _, str := range s {
+		if str != "" {
+			r = append(r, str)
+		}
+	}
+	return r
+}
