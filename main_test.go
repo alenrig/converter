@@ -1,6 +1,8 @@
 package main
 
-import "testing"
+import (
+	"testing"
+)
 
 func TestGetSrcInDir(t *testing.T) {
 	expected := []string{"main.go", "main_test.go"}
@@ -9,16 +11,18 @@ func TestGetSrcInDir(t *testing.T) {
 
 	for i, v := range result {
 		if v != expected[i] {
-			t.Error("Fuck!")
+			t.Error(v, expected[i])
 		}
 	}
 }
 
 func TestOpenSrcFile(t *testing.T) {
-	expected := []string{"test"}
+	expected := []string{"test", "test"}
 	result, _ := OpenSrcFile("./test/openfile.asc")
 
-	if result != expected {
-		t.Error("Fuck!")
+	for i, v := range result {
+		if v != expected[i] {
+			t.Error(v, expected[i])
+		}
 	}
 }
