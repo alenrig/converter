@@ -72,17 +72,6 @@ func GetName(slicedContent []string) string {
 	return name
 }
 
-func deleteEmpty(s []string) []string {
-	var r []string
-	for _, str := range s {
-		i := strings.TrimRight(str, "\t\r\n")
-		if i != "" {
-			r = append(r, i)
-		}
-	}
-	return r
-}
-
 // CutDatapoints cuts datapoints from src file.
 // Strings ***<SOMETHING>*** are benchmarks - there are always a datapoints inside this range.
 func CutDatapoints(slicedContent []string) ([]string, []string) {
@@ -95,17 +84,6 @@ func CutDatapoints(slicedContent []string) ([]string, []string) {
 	datapoints := slicedContent[startLine+2 : endLine]
 
 	return header, datapoints
-}
-
-func findIndexByContent(slicedContent []string, contentToFind string) int {
-	var result int
-	for i, v := range slicedContent {
-		if v == contentToFind {
-			result = i
-		}
-	}
-
-	return result
 }
 
 // ParseHeader finishes column name and ads only one time column.
@@ -139,4 +117,26 @@ func ParseDatapoints(datapoints []string) []string {
 	}
 
 	return data
+}
+
+func deleteEmpty(s []string) []string {
+	var r []string
+	for _, str := range s {
+		i := strings.TrimRight(str, "\t\r\n")
+		if i != "" {
+			r = append(r, i)
+		}
+	}
+	return r
+}
+
+func findIndexByContent(slicedContent []string, contentToFind string) int {
+	var result int
+	for i, v := range slicedContent {
+		if v == contentToFind {
+			result = i
+		}
+	}
+
+	return result
 }
