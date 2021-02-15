@@ -106,9 +106,12 @@ func findIndexByContent(slicedContent []string, contentToFind string) int {
 	return result
 }
 
+// ParseHeader finishes column name and ads only one time column.
 func ParseHeader(header []string) []string {
-	var ions []string
-	ions = append([]string{"time"}, ions...)
+	var ions []string = []string{"time"}
+	for _, v := range header {
+		ions = append(ions, v)
+	}
 
 	return ions
 }
