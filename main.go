@@ -27,8 +27,9 @@ func main() {
 
 		name := GetName(slicedContent)
 		header, datapoints := CutDatapoints(slicedContent)
-		ions := ParseHeader(header)
-		fmt.Println(name, header, ions, datapoints)
+		header = ParseHeader(header)
+		datapoints = ParseDatapoints(datapoints)
+		fmt.Println(name, header, datapoints)
 	}
 }
 
@@ -118,6 +119,12 @@ func ParseHeader(header []string) []string {
 
 // ParseDatapoints parses datapoints, trims symbols and deletes unnecessary time columns.
 func ParseDatapoints(datapoints []string) []string {
+	for _, v := range datapoints {
+		line := strings.Split(v, "\t")
+		line = deleteEmpty(line)
+		fmt.Print(line)
+	}
+	datapoints = deleteEmpty(datapoints)
 
 	return datapoints
 }
