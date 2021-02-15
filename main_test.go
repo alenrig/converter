@@ -99,3 +99,16 @@ func TestParseDatapoints(t *testing.T) {
 		t.Error(result[len(result)-1], expectedFirstLine)
 	}
 }
+
+func TestFindIndexesToDelete(t *testing.T) {
+	array := []string{"2.40000E-002", "1.26501E+002", "5.46667E-002", "8.71941E+003", "8.40000E-002", "6.51140E+003"}
+	expected := []int{2, 4}
+
+	result := FindIndexesToDelete(array)
+
+	for i, v := range expected {
+		if v != result[i] {
+			t.Error(v, result[i])
+		}
+	}
+}
