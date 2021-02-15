@@ -28,3 +28,15 @@ func TestOpenSrcFile(t *testing.T) {
 		}
 	}
 }
+
+func TestGetName(t *testing.T) {
+	expected := "DLT001_Al_10_5"
+
+	path := "test"
+	file, _ := OpenSrcFile(&path, "DLT001_Al_10_5.dp_rpc_asc")
+	result := GetName(file)
+
+	if expected != result {
+		t.Error(result, expected)
+	}
+}
