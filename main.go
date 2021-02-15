@@ -27,9 +27,10 @@ func main() {
 
 		name := GetName(slicedContent)
 		header, datapoints := CutDatapoints(slicedContent)
-		header = ParseHeader(header)
-		datapoints = ParseDatapoints(datapoints)
-		fmt.Println(name, header, datapoints)
+		head := ParseHeader(header)
+		data := ParseDatapoints(datapoints)
+		data = append([]string{head}, data...)
+		fmt.Println(name, data)
 	}
 }
 
@@ -108,13 +109,13 @@ func findIndexByContent(slicedContent []string, contentToFind string) int {
 }
 
 // ParseHeader finishes column name and ads only one time column.
-func ParseHeader(header []string) []string {
+func ParseHeader(header []string) string {
 	var ions []string = []string{"time"}
 	for _, v := range header {
 		ions = append(ions, v)
 	}
-
-	return ions
+	head := strings.Join(ions, ",")
+	return head
 }
 
 // ParseDatapoints parses datapoints, trims symbols and deletes unnecessary time columns.

@@ -70,17 +70,15 @@ func TestCutDatapoints(t *testing.T) {
 }
 
 func TestParseHead(t *testing.T) {
-	expected := []string{"time", "133Cs 27Al", "133Cs 69Ga", "133Cs 75As"}
+	expected := "time,133Cs 27Al,133Cs 69Ga,133Cs 75As"
 
 	file, _ := OpenSrcFile(&testPath, "DLT001_Al_10_5.dp_rpc_asc")
 	header, _ := CutDatapoints(file)
 
 	result := ParseHeader(header)
 
-	for i, v := range expected {
-		if v != result[i] {
-			t.Error(v, result[i])
-		}
+	if result != expected {
+		t.Error(result, expected)
 	}
 }
 
