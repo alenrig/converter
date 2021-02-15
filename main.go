@@ -63,7 +63,7 @@ func OpenSrcFile(path *string, srcFile string) ([]string, error) {
 
 // GetName gets original filename.
 func GetName(slicedContent []string) string {
-	slicedNameString := strings.Split(slicedContent[2], "\t")
+	slicedNameString := strings.Split(slicedContent[1], "\t")
 	fullName := slicedNameString[len(slicedNameString)-1]
 	name := strings.Split(fullName, ".")[0]
 
