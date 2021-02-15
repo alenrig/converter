@@ -35,5 +35,5 @@ compile:
     paths:
       - converter
   only:
-    refs:
-      - master
+    - master
+    - tag
