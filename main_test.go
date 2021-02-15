@@ -77,9 +77,9 @@ func TestParseHead(t *testing.T) {
 
 	result := ParseHeader(header)
 
-	for i, v := range result {
-		if v != expected[i] {
-			t.Error(v, expected[i])
+	for i, v := range expected {
+		if v != result[i] {
+			t.Error(v, result[i])
 		}
 	}
 }
