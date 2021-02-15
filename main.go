@@ -27,8 +27,8 @@ func main() {
 
 		name := GetName(slicedContent)
 		header, datapoints := CutDatapoints(slicedContent)
-		ions := parseHeader(header)
-		fmt.Println(name, datapoints, ions)
+		//ions := parseHeader(header)
+		fmt.Println(name, header, datapoints)
 	}
 }
 
@@ -83,11 +83,13 @@ func deleteEmpty(s []string) []string {
 
 // CutDatapoints cuts datapoints from src file.
 // Strings ***<SOMETHING>*** are benchmarks - there are always a datapoints inside this range.
-func CutDatapoints(slicedContent []string) (string, []string) {
-	startLine := findIndexByContent(slicedContent, "*** DATA START ***") + 3
+func CutDatapoints(slicedContent []string) ([]string, []string) {
+	startLine := findIndexByContent(slicedContent, "*** DATA START ***") + 2
 	endLine := findIndexByContent(slicedContent, "*** DATA END ***") - 1
 
-	header := slicedContent[startLine]
+	rawHeader := slicedContent[startLine]
+	header := strings.Split(rawHeader, "\t")
+	header = deleteEmpty(header)
 	datapoints := slicedContent[startLine+2 : endLine]
 
 	return header, datapoints
