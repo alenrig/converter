@@ -39,3 +39,16 @@ func TestGetName(t *testing.T) {
 		t.Error(result, expected)
 	}
 }
+
+func TestCutDatapoints(t *testing.T) {
+	expected := []string{"133Cs 27Al", "133Cs 69Ga", "133Cs 75As"}
+
+	file, _ := OpenSrcFile(&testPath, "DLT001_Al_10_5.dp_rpc_asc")
+	result, _ := CutDatapoints(file)
+
+	for i, v := range result {
+		if v != expected[i] {
+			t.Error(v, expected[i])
+		}
+	}
+}
