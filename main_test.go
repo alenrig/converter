@@ -4,11 +4,12 @@ import (
 	"testing"
 )
 
-func TestGetSrcInDir(t *testing.T) {
-	expected := []string{"main.go", "main_test.go"}
-	var path = "."
+var testPath string = "test"
 
-	result, _ := GetSrcInDir(&path)
+func TestGetSrcInDir(t *testing.T) {
+	expected := []string{"DLT001_Al_10_5.dp_rpc_asc"}
+
+	result, _ := GetSrcInDir(&testPath)
 
 	for i, v := range result {
 		if v != expected[i] {
@@ -19,8 +20,7 @@ func TestGetSrcInDir(t *testing.T) {
 
 func TestOpenSrcFile(t *testing.T) {
 	expected := []string{"test", "test"}
-	path := "test"
-	result, _ := OpenSrcFile(&path, "openfile.asc")
+	result, _ := OpenSrcFile(&testPath, "openfile.asc")
 
 	for i, v := range result {
 		if v != expected[i] {
@@ -32,8 +32,7 @@ func TestOpenSrcFile(t *testing.T) {
 func TestGetName(t *testing.T) {
 	expected := "DLT001_Al_10_5"
 
-	path := "test"
-	file, _ := OpenSrcFile(&path, "DLT001_Al_10_5.dp_rpc_asc")
+	file, _ := OpenSrcFile(&testPath, "DLT001_Al_10_5.dp_rpc_asc")
 	result := GetName(file)
 
 	if expected != result {
