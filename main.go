@@ -119,19 +119,7 @@ func ParseHeader(header []string) []string {
 
 // ParseDatapoints parses datapoints, trims symbols and deletes unnecessary time columns.
 func ParseDatapoints(datapoints []string) []string {
-	for _, v := range datapoints {
-		line := strings.Split(v, "\t")
-		line = deleteEmpty(line)
-		//indexesToDelete := FindIndexesToDelete(line)
-		fmt.Print(line)
-	}
 	datapoints = deleteEmpty(datapoints)
 
 	return datapoints
-}
-
-// FindIndexesToDelete finds indexes of unnecessary time columns.
-func FindIndexesToDelete(array []string) []int {
-
-	return []int{1, 2}
 }
