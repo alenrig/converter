@@ -2,7 +2,6 @@ package main
 
 import (
 	"flag"
-	"fmt"
 	"io/ioutil"
 	"log"
 	"strings"
@@ -30,7 +29,6 @@ func main() {
 		head := ParseHeader(header)
 		data := ParseDatapoints(datapoints)
 		data = append([]string{head}, data...)
-		fmt.Println(name, data)
 		WriteCsvFile(pathFlag, name, data)
 	}
 }
