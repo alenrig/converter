@@ -27,8 +27,8 @@ func main() {
 
 		name := GetName(slicedContent)
 		header, datapoints := CutDatapoints(slicedContent)
-		//ions := parseHeader(header)
-		fmt.Println(name, header, datapoints)
+		ions := ParseHeader(header)
+		fmt.Println(name, header, ions, datapoints)
 	}
 }
 
@@ -106,9 +106,8 @@ func findIndexByContent(slicedContent []string, contentToFind string) int {
 	return result
 }
 
-func parseHeader(rawString string) []string {
-	slicedHeader := strings.Split(rawString, "\t")
-	ions := deleteEmpty(slicedHeader)
+func ParseHeader(header []string) []string {
+	var ions []string
 	ions = append([]string{"time"}, ions...)
 
 	return ions
