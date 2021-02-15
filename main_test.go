@@ -89,7 +89,9 @@ func TestParseDatapoints(t *testing.T) {
 	expectedLastLine := "1.69520E+001,1.47737E+001,1.77897E+005,3.06937E+004"
 
 	file, _ := OpenSrcFile(&testPath, "DLT001_Al_10_5.dp_rpc_asc")
-	_, result := CutDatapoints(file)
+	_, datapoints := CutDatapoints(file)
+
+	result := ParseDatapoints(datapoints)
 
 	if result[0] != expectedFirstLine {
 		t.Error(result[0], expectedFirstLine)
