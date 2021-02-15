@@ -115,3 +115,9 @@ func ParseHeader(header []string) []string {
 
 	return ions
 }
+
+// ParseDatapoints parses datapoints, trims symbols and deletes unnecessary time columns.
+func ParseDatapoints(datapoints []string) []string {
+
+	return datapoints
+}
