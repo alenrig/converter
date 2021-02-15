@@ -34,6 +34,3 @@ compile:
   artifacts:
     paths:
       - converter
-  only:
-    - master
-    - tag
