@@ -83,3 +83,19 @@ func TestParseHead(t *testing.T) {
 		}
 	}
 }
+
+func TestParseDatapoints(t *testing.T) {
+	expectedFirstLine := "2.40000E-002,1.26501E+002,8.71941E+003,6.51140E+003"
+	expectedLastLine := "1.69520E+001,1.47737E+001,1.77897E+005,3.06937E+004"
+
+	file, _ := OpenSrcFile(&testPath, "DLT001_Al_10_5.dp_rpc_asc")
+	_, result := CutDatapoints(file)
+
+	if result[0] != expectedFirstLine {
+		t.Error(result[0], expectedFirstLine)
+	}
+
+	if result[len(result)-1] != expectedLastLine {
+		t.Error(result[len(result)-1], expectedFirstLine)
+	}
+}
