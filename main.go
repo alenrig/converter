@@ -85,7 +85,7 @@ func deleteEmpty(s []string) []string {
 // Strings ***<SOMETHING>*** are benchmarks - there are always a datapoints inside this range.
 func CutDatapoints(slicedContent []string) ([]string, []string) {
 	startLine := findIndexByContent(slicedContent, "*** DATA START ***") + 2
-	endLine := findIndexByContent(slicedContent, "*** DATA END ***") - 1
+	endLine := findIndexByContent(slicedContent, "*** DATA END ***")
 
 	rawHeader := slicedContent[startLine]
 	header := strings.Split(rawHeader, "\t")
