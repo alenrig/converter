@@ -27,8 +27,8 @@ func main() {
 
 		name := GetName(slicedContent)
 		header, datapoints := CutDatapoints(slicedContent)
-		ions := parseHeader(header)
-		fmt.Println(name, datapoints, ions)
+		ions := ParseHeader(header)
+		fmt.Println(name, header, ions, datapoints)
 	}
 }
 
@@ -63,8 +63,8 @@ func OpenSrcFile(path *string, srcFile string) ([]string, error) {
 
 // GetName gets original filename.
 func GetName(slicedContent []string) string {
-	slicedNameString := strings.Split(slicedContent[2], "\t")
-	fullName := slicedContent[len(slicedNameString)-1]
+	slicedNameString := strings.Split(slicedContent[1], "\t")
+	fullName := slicedNameString[len(slicedNameString)-1]
 	name := strings.Split(fullName, ".")[0]
 
 	return name
@@ -73,8 +73,9 @@ func GetName(slicedContent []string) string {
 func deleteEmpty(s []string) []string {
 	var r []string
 	for _, str := range s {
-		if str != "" {
-			r = append(r, str)
+		i := strings.TrimRight(str, "\t\r\n")
+		if i != "" {
+			r = append(r, i)
 		}
 	}
 	return r
@@ -82,11 +83,13 @@ func deleteEmpty(s []string) []string {
 
 // CutDatapoints cuts datapoints from src file.
 // Strings ***<SOMETHING>*** are benchmarks - there are always a datapoints inside this range.
-func CutDatapoints(slicedContent []string) (string, []string) {
-	startLine := findIndexByContent(slicedContent, "*** DATA START ***") + 3
-	endLine := findIndexByContent(slicedContent, "*** DATA END ***") - 1
+func CutDatapoints(slicedContent []string) ([]string, []string) {
+	startLine := findIndexByContent(slicedContent, "*** DATA START ***") + 2
+	endLine := findIndexByContent(slicedContent, "*** DATA END ***")
 
-	header := slicedContent[startLine]
+	rawHeader := slicedContent[startLine]
+	header := strings.Split(rawHeader, "\t")
+	header = deleteEmpty(header)
 	datapoints := slicedContent[startLine+2 : endLine]
 
 	return header, datapoints
@@ -103,10 +106,12 @@ func findIndexByContent(slicedContent []string, contentToFind string) int {
 	return result
 }
 
-func parseHeader(rawString string) []string {
-	slicedHeader := strings.Split(rawString, "\t")
-	ions := deleteEmpty(slicedHeader)
-	ions = append([]string{"time"}, ions...)
+// ParseHeader finishes column name and ads only one time column.
+func ParseHeader(header []string) []string {
+	var ions []string = []string{"time"}
+	for _, v := range header {
+		ions = append(ions, v)
+	}
 
 	return ions
 }
