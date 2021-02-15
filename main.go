@@ -31,6 +31,7 @@ func main() {
 		data := ParseDatapoints(datapoints)
 		data = append([]string{head}, data...)
 		fmt.Println(name, data)
+		WriteCsvFile(pathFlag, name, data)
 	}
 }
 
@@ -61,6 +62,15 @@ func OpenSrcFile(path *string, srcFile string) ([]string, error) {
 	slicedContent = deleteEmpty(slicedContent)
 
 	return slicedContent, nil
+}
+
+// WriteCsvFile writes final data in csv file format.
+func WriteCsvFile(path *string, filename string, data []string) {
+	rawData := strings.Join(data, "\n")
+	dataToWrite := []byte(rawData)
+	if err := ioutil.WriteFile(filename, dataToWrite, 0755); err != nil {
+		log.Fatal(err)
+	}
 }
 
 // GetName gets original filename.
