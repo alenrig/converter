@@ -66,7 +66,7 @@ func OpenSrcFile(path *string, srcFile string) ([]string, error) {
 func WriteCsvFile(path *string, filename string, data []string) {
 	rawData := strings.Join(data, "\n")
 	dataToWrite := []byte(rawData)
-	if err := ioutil.WriteFile(filename+".csv", dataToWrite, 0755); err != nil {
+	if err := ioutil.WriteFile(*path+"/"+filename+".csv", dataToWrite, 0755); err != nil {
 		log.Fatal(err)
 	}
 }
