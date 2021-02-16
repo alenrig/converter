@@ -39,6 +39,6 @@ release:
   stage: deploy
   script:
     - curl -sfL https://install.goreleaser.com/github.com/goreleaser/goreleaser.sh | sh
-    - goreleaser release --rm-dist
+    - ./bin/goreleaser release --rm-dist
   only:
     - tags
