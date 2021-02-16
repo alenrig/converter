@@ -1,4 +1,6 @@
-image: golang:latest
+stages:
+  - test
+  - deploy
 
 variables:
   REPO_NAME: gitlab.com/alenrig/converter
@@ -6,12 +8,8 @@ variables:
   DOCKER_USERNAME: $CI_REGISTRY_USER
   DOCKER_PASSWORD: $CI_REGISTRY_PASSWORD
 
-stages:
-  - test
-  - build
-  - deploy
-
 format:
+  image: golang:latest
   stage: test
   before_script:
     - mkdir -p $GOPATH/src/$(dirname $REPO_NAME)
@@ -22,18 +20,6 @@ format:
     - go vet $(go list ./... | grep -v /vendor/)
     - go test -race $(go list ./... | grep -v /vendor/)
 
-compile:
-  stage: build
-  before_script:
-    - mkdir -p $GOPATH/src/$(dirname $REPO_NAME)
-    - ln -svf $CI_PROJECT_DIR $GOPATH/src/$REPO_NAME
-    - cd $GOPATH/src/$REPO_NAME
-  script:
-    - go build -race -ldflags "-extldflags '-static'" -o $CI_PROJECT_DIR/converter
-  artifacts:
-    paths:
-      - converter
-
 release:
   stage: deploy
   image: docker:stable
@@ -42,9 +28,6 @@ release:
 
   variables:
     GIT_DEPTH: 0
-
-  before_script:
-    - rm converter
 
   script: |
     docker run --rm --privileged \
