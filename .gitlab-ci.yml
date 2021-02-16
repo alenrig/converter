@@ -43,6 +43,9 @@ release:
   variables:
     GIT_DEPTH: 0
 
+  before_script:
+    - rm converter
+
   script: |
     docker run --rm --privileged \
       -v $PWD:/go/src/gitlab.com/alenrig/converter \
