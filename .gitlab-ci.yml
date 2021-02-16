@@ -1,19 +1,10 @@
 image: golang:latest
 
 variables:
-  # Please edit to your GitLab project
   REPO_NAME: gitlab.com/alenrig/converter
-
-# The problem is that to be able to use go get, one needs to put
-# the repository in the $GOPATH. So for example if your gitlab domain
-# is gitlab.com, and that your repository is namespace/project, and
-# the default GOPATH being /go, then you'd need to have your
-# repository in /go/src/gitlab.com/namespace/project
-# Thus, making a symbolic link corrects this.
-before_script:
-  - mkdir -p $GOPATH/src/$(dirname $REPO_NAME)
-  - ln -svf $CI_PROJECT_DIR $GOPATH/src/$REPO_NAME
-  - cd $GOPATH/src/$REPO_NAME
+  DOCKER_REGISTRY: $CI_REGISTRY
+  DOCKER_USERNAME: $CI_REGISTRY_USER
+  DOCKER_PASSWORD: $CI_REGISTRY_PASSWORD
 
 stages:
   - test
@@ -22,6 +13,10 @@ stages:
 
 format:
   stage: test
+  before_script:
+    - mkdir -p $GOPATH/src/$(dirname $REPO_NAME)
+    - ln -svf $CI_PROJECT_DIR $GOPATH/src/$REPO_NAME
+    - cd $GOPATH/src/$REPO_NAME
   script:
     - go fmt $(go list ./... | grep -v /vendor/)
     - go vet $(go list ./... | grep -v /vendor/)
@@ -29,6 +24,10 @@ format:
 
 compile:
   stage: build
+  before_script:
+    - mkdir -p $GOPATH/src/$(dirname $REPO_NAME)
+    - ln -svf $CI_PROJECT_DIR $GOPATH/src/$REPO_NAME
+    - cd $GOPATH/src/$REPO_NAME
   script:
     - go build -race -ldflags "-extldflags '-static'" -o $CI_PROJECT_DIR/converter
   artifacts:
@@ -42,18 +41,7 @@ release:
     - docker:dind
 
   variables:
-    DOCKER_REGISTRY: $CI_REGISTRY
-    DOCKER_USERNAME: $CI_REGISTRY_USER
-    DOCKER_PASSWORD: $CI_REGISTRY_PASSWORD
-
-    # Disable shallow cloning so that goreleaser can diff between tags to
-    # generate a changelog.
     GIT_DEPTH: 0
-
-  # Only run this release job for tags, not every commit (for example).
-  only:
-    refs:
-      - tags
 
   script: |
     docker run --rm --privileged \
@@ -63,3 +51,7 @@ release:
       -e DOCKER_USERNAME -e DOCKER_PASSWORD -e DOCKER_REGISTRY  \
       -e GITLAB_TOKEN \
       goreleaser/goreleaser release --rm-dist
+
+  only:
+    refs:
+      - tags
