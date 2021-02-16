@@ -34,8 +34,8 @@ release:
       -v $PWD:/go/src/${REPO_NAME} \
       -w /go/src/${REPO_NAME} \
       -v /var/run/docker.sock:/var/run/docker.sock \
-      -e $DOCKER_USERNAME -e $DOCKER_PASSWORD -e $DOCKER_REGISTRY  \
-      -e $GITLAB_TOKEN \
+      -e DOCKER_USERNAME -e DOCKER_PASSWORD -e DOCKER_REGISTRY  \
+      -e GITLAB_TOKEN \
       goreleaser/goreleaser release --rm-dist
 
   only:
