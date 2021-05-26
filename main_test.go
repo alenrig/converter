@@ -4,7 +4,7 @@ import (
 	"testing"
 )
 
-var testPath string = "test"
+var testPath string = "tests"
 
 func TestGetSrcInDir(t *testing.T) {
 	expected := []string{"DLT001_Al_10_5.dp_rpc_asc"}
