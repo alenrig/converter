@@ -10,4 +10,4 @@ test:
 	go test -race $(go list ./... | grep -v /vendor/)
 
 clean:
-	go clean
+	go clean && rm -rf dist
